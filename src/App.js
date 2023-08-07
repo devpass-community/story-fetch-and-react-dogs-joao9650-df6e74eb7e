@@ -8,7 +8,14 @@ function App() {
   const [dogImages, setDogImages] = useState([]);
 
   useEffect(() => {
-    // TODO
+    setIsLoading(true);
+    fetch("https://dog.ceo/api/breeds/list/all")
+      .then((resp) => resp.json())
+      .then((resp) => {
+        console.log(resp);
+        setBreeds(Object.keys(resp.message));
+        setIsLoading(false);
+      });
   }, []);
 
   const searchByBreed = () => {
@@ -42,7 +49,7 @@ function App() {
             className="btn btn-primary mx-2"
             disabled={!selectedBreed}
             onClick={searchByBreed}
-            style={{color: "#fff", cursor: "pointer"}}
+            style={{ color: "#fff", cursor: "pointer" }}
           >
             Search
           </button>
