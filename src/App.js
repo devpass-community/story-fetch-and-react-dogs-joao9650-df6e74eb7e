@@ -12,14 +12,19 @@ function App() {
     fetch("https://dog.ceo/api/breeds/list/all")
       .then((resp) => resp.json())
       .then((resp) => {
-        console.log(resp);
         setBreeds(Object.keys(resp.message));
         setIsLoading(false);
       });
   }, []);
 
   const searchByBreed = () => {
-    // TODO
+    setIsLoading(true);
+    fetch(`https://dog.ceo/api/breed/${selectedBreed}/images`)
+      .then((resp) => resp.json())
+      .then((resp) => {
+        setDogImages(resp.message);
+        setIsLoading(false);
+      });
   };
 
   return (
