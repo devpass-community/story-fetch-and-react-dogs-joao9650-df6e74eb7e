@@ -8,11 +8,23 @@ function App() {
   const [dogImages, setDogImages] = useState([]);
 
   useEffect(() => {
-    // TODO
+    setIsLoading(true);
+    fetch("https://dog.ceo/api/breeds/list/all")
+      .then((resp) => resp.json())
+      .then((resp) => {
+        setBreeds(Object.keys(resp.message));
+        setIsLoading(false);
+      });
   }, []);
 
   const searchByBreed = () => {
-    // TODO
+    setIsLoading(true);
+    fetch(`https://dog.ceo/api/breed/${selectedBreed}/images`)
+      .then((resp) => resp.json())
+      .then((resp) => {
+        setDogImages(resp.message);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -42,7 +54,7 @@ function App() {
             className="btn btn-primary mx-2"
             disabled={!selectedBreed}
             onClick={searchByBreed}
-            style={{color: "#fff", cursor: "pointer"}}
+            style={{ color: "#fff", cursor: "pointer" }}
           >
             Search
           </button>
